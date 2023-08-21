@@ -1,41 +1,40 @@
-import React, {createRef, useEffect} from 'react'
+import React from 'react'
 import { useRecipeContext } from '../context/RecipeContext'
 import CustomButton from '../atoms/Button'
 import IngredientLine from '../molecules/IngredientLine'
-import { InputTextArea } from '../atoms/Form'
+import InstructionLine from '../molecules/InstructionLine'
+import FullRecipe from './FullRecipe'
 
 export default function RecipeList() {
-    const {ingredientLineArr, setIngredientLineArr} = useRecipeContext()    
+    const {ingredientLineArr, setIngredientLineArr, instructionLineArr, setInstructionLineArr, setFullRecipe} = useRecipeContext()    
 
     const addIngredientLine = () => {
-        const newRef = createRef()
         setIngredientLineArr(prevArr => [...prevArr, {Calories:'0'}])
     }
-
-    useEffect(() => {
-        console.log('Ing list: ', ingredientLineArr)
-    }, [ingredientLineArr])
+    
+    const addInstructionLine = () => {
+        const currentIndex = instructionLineArr.length
+        setInstructionLineArr(prevArr => [...prevArr, {index: currentIndex, desc:''}])
+    }
+    
+    const saveRecipe = () => {
+        console.log({ingredientLineArr, instructionLineArr})
+        setFullRecipe(prevArr => [...prevArr, {ingredientLineArr, instructionLineArr}])
+    }
 
   return (
     <div className='p-5 space-y-5'>
-        {ingredientLineArr.map((el, index) => {
-            // {console.log('Element', el)}
-            return <IngredientLine key={index} lineIndex={index} />
-        })}
+        {/* Ingredients */}
+        {ingredientLineArr.map((el, index) =>  <IngredientLine key={index} lineIndex={index} /> )}
         <CustomButton text={'Add Ingredient'} handleClick={addIngredientLine} className={'block ml-auto'}/>
-        {ingredientLineArr.map((el, idx) => {
-            return (
-                <div className='space-x-5' key={idx}>
-                    <span>{el.Count ? el.Count : 'Empty'}</span>
-                    <span>{el.Measure ? el.Measure : 'Empty'}</span>
-                    <span>{el.Ingredient ? el.Ingredient : 'Empty'}</span>
-                    <span>{el.Calories ? el.Calories : 'Empty'}</span>
-                </div>
-            )
-        })}
-        <p>
-            Calories: {ingredientLineArr.some(el => el?.Calories) ? ingredientLineArr.reduce((sum, curr) => sum+=(parseInt(curr?.Calories)), 0) : 'None'}
-        </p>
+        
+        {/* Instructions */}
+        {instructionLineArr.map((el, index) =>  <InstructionLine key={index} stepNumber={index}/> )}        
+        <CustomButton text={'Add Instruction'} handleClick={addInstructionLine} className={'block ml-auto'}/>
+        
+        <CustomButton text={'Save'} handleClick={saveRecipe} className={'block ml-auto'}/>
+
+        <FullRecipe />
     </div>
   )
 }
