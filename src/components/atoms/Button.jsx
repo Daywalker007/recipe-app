@@ -11,7 +11,7 @@ export default function CustomButton({text, handleClick, className, type = 'butt
      onClick={handleClick}
      className={style}
      {...other}>
-      <span>{text}</span>
+      {text}
     </button>
   )
 }

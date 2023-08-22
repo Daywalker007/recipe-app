@@ -6,6 +6,7 @@ import { RecipeContextProvider } from './components/context/RecipeContext'
 import LoginPage from './components/organs/LoginPage'
 import RecipeList from './components/organs/RecipeList'
 import Nav from './components/molecules/Nav'
+import Home from './components/organs/Home'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Nav />
         <Routes>
           <Route path='/' element={<LoginPage />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/recipe' element={<RecipeList />} />
         </Routes>
       </BrowserRouter>
