@@ -7,8 +7,8 @@ export default function InstructionLine({stepNumber}) {
     const [currentInstruction, setCurrentInstruction] = useState({index:stepNumber, desc:''})
 
     const handleInput = (e) => {
-        const {value} = e.target
-        const newObj = {index:stepNumber, desc:value}
+        const {innerText} = e.target
+        const newObj = {index:stepNumber, desc:innerText}
         setCurrentInstruction(newObj)
         
         let newContextInstructions = [...instructionLineArr]
