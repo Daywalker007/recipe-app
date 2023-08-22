@@ -14,7 +14,7 @@ export function InputTextArea({name, id, onChange, className, err}) {
   return (
     <div className={className}>
         <label htmlFor={name} className='block w-fit'>{name}</label>
-        <div role='textbox' contentEditable='plaintext-only' id={id && id} name={name} placeholder={name} className='block resize p-3 rounded w-full shadow text-black h-100' onInput={onChange}></div>
+        <div role='textbox' contentEditable='plaintext-only' id={id && id} name={name} placeholder={name} className='block resize p-3 rounded w-full shadow text-black h-100 bg-white' onInput={onChange}></div>
         <label htmlFor={name} className='text-red-500'>{err}</label>
     </div>
   )

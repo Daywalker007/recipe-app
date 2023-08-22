@@ -23,7 +23,7 @@ export default function RecipeList() {
     }
 
   return (
-    <div className='p-5 space-y-5'>
+    <div className='body-height space-y-5'>
         {/* Ingredients */}
         {ingredientLineArr.map((el, index) =>  <IngredientLine key={index} lineIndex={index} /> )}
         <CustomButton text={'Add Ingredient'} handleClick={addIngredientLine} className={'block ml-auto'}/>
