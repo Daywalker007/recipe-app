@@ -3,7 +3,7 @@ import { useRecipeContext } from '../context/RecipeContext'
 import CustomButton from '../atoms/Button'
 import IngredientLine from '../molecules/IngredientLine'
 import InstructionLine from '../molecules/InstructionLine'
-import FullRecipe from './FullRecipe'
+import FullRecipe from '../molecules/FullRecipe'
 
 export default function RecipeList() {
     const {ingredientLineArr, setIngredientLineArr, instructionLineArr, setInstructionLineArr, setFullRecipe} = useRecipeContext()    

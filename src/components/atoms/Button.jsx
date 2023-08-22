@@ -1,15 +1,16 @@
 import React from 'react'
 
-export default function CustomButton({text, handleClick, className, type = 'button', btnRef = null}) {
+export default function CustomButton({text, handleClick, className, type = 'button', btnRef = null, ...other}) {
 
-  const style = `px-10 border rounded-2xl my-3 text-lg font-semibold ${className}`
+  const style = `px-4 py-1 border rounded-2xl my-3 text-sm font-semibold ${className}`
 
   return (
     <button 
       ref={btnRef}
       type={type}
      onClick={handleClick}
-     className={style}>
+     className={style}
+     {...other}>
       <span>{text}</span>
     </button>
   )

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .body-height {
+      @apply min-h-[95dvh] w-11/12 mx-auto;
+    }
+  }

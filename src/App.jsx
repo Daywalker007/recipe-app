@@ -1,13 +1,13 @@
-import './index.css'
 import { RecipeContextProvider } from './components/context/RecipeContext'
 import RecipeList from './components/organs/RecipeList'
+import LoginPage from './components/organs/LoginPage'
 
 function App() {
   
 
   return (
     <RecipeContextProvider>
-      <RecipeList />
+      <LoginPage />
     </RecipeContextProvider>
   )
 }
