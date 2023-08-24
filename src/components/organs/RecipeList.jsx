@@ -4,6 +4,7 @@ import CustomButton from '../atoms/Button'
 import IngredientLine from '../molecules/IngredientLine'
 import InstructionLine from '../molecules/InstructionLine'
 import FullRecipe from '../molecules/FullRecipe'
+import {getRecipe} from '../util/db-endpoints'
 
 export default function RecipeList() {
     const {ingredientLineArr, setIngredientLineArr, instructionLineArr, setInstructionLineArr, setFullRecipe} = useRecipeContext()    
@@ -18,9 +19,17 @@ export default function RecipeList() {
     }
     
     const saveRecipe = () => {
-        console.log({ingredientLineArr, instructionLineArr})
-        setFullRecipe(prevArr => [...prevArr, {ingredientLineArr, instructionLineArr}])
-    }
+        // console.log({name:'temp name', ingredientLineArr, instructionLineArr})
+        setFullRecipe({name:'temp name', ingredientLineArr, instructionLineArr})
+    }    
+    
+    const getRecipeFromDB = async () => {
+        const {name, ingredients, instructions} = await getRecipe('temp name')
+        // console.log(await getRecipe('temp name'))
+        const ing = eval(ingredients)
+        const inst = eval(instructions)
+        setFullRecipe({name, ingredients:ing, instructions:inst })
+    }    
 
   return (
     <div className='body-height space-y-5'>
@@ -33,6 +42,7 @@ export default function RecipeList() {
         <CustomButton text={'Add Instruction'} handleClick={addInstructionLine} className={'block ml-auto'}/>
         
         <CustomButton text={'Save'} handleClick={saveRecipe} className={'block ml-auto'}/>
+        <CustomButton text={'Get Recipe'} handleClick={getRecipeFromDB} className={'block ml-auto'}/>
 
         <FullRecipe />
     </div>

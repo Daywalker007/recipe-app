@@ -1,6 +1,7 @@
 import React from 'react'
 import RecipeCard from '../atoms/RecipeCard'
 
+
 function RecipeListView() {
     return (
         <div className='flex flex-wrap gap-3 py-2'>

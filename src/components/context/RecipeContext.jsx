@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import {sendRecipe} from '../util/db-endpoints';
 
 // Create a context instance
 const RecipeContext = createContext();
@@ -12,7 +13,7 @@ export const useRecipeContext = () => {
 export const RecipeContextProvider = ({ children }) => {
   const [ingredientLineArr, setIngredientLineArr] = useState([]);  
   const [instructionLineArr, setInstructionLineArr] = useState([]);  
-  const [fullRecipe, setFullRecipe] = useState([])
+  const [fullRecipe, setFullRecipe] = useState({})
 
   const value = {
     ingredientLineArr,
@@ -22,6 +23,10 @@ export const RecipeContextProvider = ({ children }) => {
     fullRecipe,
     setFullRecipe
   }
+
+  useEffect(() => {
+    // fullRecipe !== {} && console.log('Recipe from endpoint: ', sendRecipe(fullRecipe))
+  }, [fullRecipe])
 
   return (
     <RecipeContext.Provider value={value}>

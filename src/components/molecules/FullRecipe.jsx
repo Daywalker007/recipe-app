@@ -9,21 +9,19 @@ export default function FullRecipe() {
     const [calories, setCalories] = useState()
 
     useEffect(() => {
-        fillRecipeItem()
+        console.log('Current recipe', fullRecipe)
+        fullRecipe?.name && fillRecipeItem()
     }, [fullRecipe])
 
-    const fillRecipeItem = () => {
-        fullRecipe.length && fullRecipe.map((el) => {
-                
-            {/* List of ingredients */}
-            setIngredients(el.ingredientLineArr.map((ingLine, i) => renderIngredients(ingLine, i)))
-
-            {/* List of instructions */}
-            setInstructions(el.instructionLineArr.map((instLine, i) => renderInstructions(instLine, i)))
-
-            {/* Calorie Count */}
-            setCalories(renderCalories(el.ingredientLineArr))                
-        })
+    const fillRecipeItem = () => {            
+        {/* List of ingredients */}
+        setIngredients(fullRecipe.ingredients.map((ingLine, i) => renderIngredients(ingLine, i)))
+        
+        {/* List of instructions */}
+        setInstructions(fullRecipe.instructions.map((instLine, i) => renderInstructions(instLine, i)))
+        
+        {/* Calorie Count */}
+        setCalories(renderCalories(fullRecipe.ingredients))
     }
 
     const renderIngredients = (ingLine, idx) => {
