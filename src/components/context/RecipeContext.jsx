@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {sendRecipe} from '../util/db-endpoints';
 
 // Create a context instance
 const RecipeContext = createContext();

@@ -4,7 +4,7 @@ import CustomButton from '../atoms/Button'
 import IngredientLine from '../molecules/IngredientLine'
 import InstructionLine from '../molecules/InstructionLine'
 import FullRecipe from '../molecules/FullRecipe'
-import {getRecipe} from '../util/db-endpoints'
+import { sendRecipe, getRecipe} from '../util/db-endpoints'
 
 export default function RecipeList() {
     const {ingredientLineArr, setIngredientLineArr, instructionLineArr, setInstructionLineArr, setFullRecipe} = useRecipeContext()    
@@ -20,7 +20,16 @@ export default function RecipeList() {
     
     const saveRecipe = () => {
         // console.log({name:'temp name', ingredientLineArr, instructionLineArr})
-        setFullRecipe({name:'temp name', ingredientLineArr, instructionLineArr})
+        sendRecipe({
+            name:'temp name', 
+            ingredients:ingredientLineArr, 
+            instructions:instructionLineArr,
+            owner:'Reggie',
+            categories:[
+                'sample',
+                'category'
+            ],
+        })
     }    
     
     const getRecipeFromDB = async () => {

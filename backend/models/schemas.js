@@ -5,6 +5,8 @@ const recipeSchema = new Schema({
     name:{type:String},
     ingredients:{type:String},
     instructions:{type:String},
+    owner:{type:String},
+    categories:[String],
     entryDate: {type:Date, default:Date.now}
 })
 
