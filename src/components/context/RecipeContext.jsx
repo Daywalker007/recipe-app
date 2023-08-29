@@ -12,6 +12,8 @@ export const useRecipeContext = () => {
 export const RecipeContextProvider = ({ children }) => {
   const [ingredientLineArr, setIngredientLineArr] = useState([]);  
   const [instructionLineArr, setInstructionLineArr] = useState([]);  
+  const [currentDescription, setCurrentDescription] = useState('')
+  const [currentRecipeName, setCurrentRecipeName] = useState('')
   const [fullRecipe, setFullRecipe] = useState()
 
   const value = {
@@ -19,6 +21,10 @@ export const RecipeContextProvider = ({ children }) => {
     setIngredientLineArr,
     instructionLineArr,
     setInstructionLineArr,
+    currentDescription,
+    setCurrentDescription,
+    currentRecipeName,
+    setCurrentRecipeName,
     fullRecipe,
     setFullRecipe
   }

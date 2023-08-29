@@ -5,13 +5,14 @@ const mongoose = require('mongoose')
 
 router.post('/send-recipe', async (req, res) => {
     try {
-        const {name, ingredients, instructions, owner, categories} = req.body
-        console.log(owner)
+        const {name, ingredients, instructions, description, owner, categories} = req.body
+        console.log(description)
         const recipeData = {
-            name:name,
+            name,
+            description,
             ingredients:JSON.stringify(ingredients),
             instructions:JSON.stringify(instructions),
-            owner:owner,
+            owner,
             categories
         }
 
@@ -32,9 +33,12 @@ router.post('/send-recipe', async (req, res) => {
 
 router.get('/get-recipe/:name', async (req, res) => {
     const name = req.params.name
-    console.log('Params: ', req.params)
-    console.log('Name: ', name)
     const result = await schemas.Recipes.find({"name":name})
+    res.send({data:result})
+})
+
+router.get('/get-recipes', async (req, res) => {
+    const result = await schemas.Recipes.find()
     res.send({data:result})
 })
 

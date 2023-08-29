@@ -35,11 +35,11 @@ export default function FullRecipe() {
         )
     }
     
-    const renderInstructions = (isntLine, idx) => {
+    const renderInstructions = (instLine, idx) => {
         return (
             <div className='space-x-5' key={idx}>
-                <span>{isntLine.index !== null ? isntLine.index : 'Empty'}</span>
-                <span>{isntLine.desc ? isntLine.desc : 'Empty'}</span>
+                <span>{instLine.index !== null ? instLine.index : 'Empty'}</span>
+                <span>{instLine.desc ? instLine.desc : 'Empty'}</span>
             </div>
         )
     }
@@ -54,6 +54,7 @@ export default function FullRecipe() {
 
   return (
     <>
+        <p>{fullRecipe?.description}</p>
         {ingredients}
         {instructions}
         {calories}      
