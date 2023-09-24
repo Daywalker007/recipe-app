@@ -20,13 +20,13 @@ export function InputTextArea({name, id, onChange, className, err, placeholder =
   )
 }
 
-export function InputDropdownField({name, id, onChange, options, className, err, placeholder = null}) {
+export function InputDropdownField({name, id, onChange, options, className, err, placeholder = null, ...other}) {
     return (
         <div className={className}>
           <label htmlFor={name} className='block w-fit'>{name}</label>
-          <select type='text' id={id && id} name={name} placeholder={name ?? placeholder} className='px-5 rounded w-full shadow text-black' onChange={onChange}>
-            <option value={null}>Select</option>
-            {options?.map((el) => {
+          <select {...other} type='text' id={id && id} name={name} placeholder={name ?? placeholder} className='px-5 rounded w-full shadow text-black' onChange={onChange}>
+            <option value={null} selected disabled hidden>Select</option>
+            {options?.map((el, idx) => {
                 return (<option value={el.val} key={`${el.label}${el.val}`}>{el.label}</option>)
             })}
           </select>

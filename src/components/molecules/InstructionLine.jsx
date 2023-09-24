@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { InputTextArea } from '../atoms/Form'
 import { useRecipeContext } from '../context/RecipeContext'
 
-export default function InstructionLine({stepNumber}) {
+export default function InstructionLine({stepNumber, defaultInfo}) {
     const {instructionLineArr, setInstructionLineArr} = useRecipeContext()
     // const [currentInstruction, setCurrentInstruction] = useState({index:stepNumber, desc:''})
 
@@ -18,7 +18,7 @@ export default function InstructionLine({stepNumber}) {
     
   return (
     <div>
-        <InputTextArea name={`Step ${stepNumber+1}`} onChange={handleInput} className={'h-fit'}/>
+        <InputTextArea defaultValue={defaultInfo?.desc} name={`Step ${stepNumber+1}`} onChange={handleInput} className={'h-fit'}/>
     </div>
   )
 }

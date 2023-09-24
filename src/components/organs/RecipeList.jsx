@@ -114,11 +114,11 @@ export default function RecipeList() {
         <InputTextArea defaultValue={existingRecipe?.description} name={'Description'} onChange={handleDescription}/>
 
         {/* Ingredients */}
-        {ingredientLineArr.map((el, index) =>  <IngredientLine key={index} lineIndex={index} /> )}
+        {ingredientLineArr.map((el, index) =>  <IngredientLine key={index} lineIndex={index} defaultInfo={el} /> )}
         <CustomButton text={'Add Ingredient'} handleClick={addIngredientLine} className={'block ml-auto'}/>
         
         {/* Instructions */}
-        {instructionLineArr.map((el, index) =>  <InstructionLine key={index} stepNumber={index}/> )}        
+        {instructionLineArr.map((el, index) =>  <InstructionLine key={index} stepNumber={index} defaultInfo={el} /> )}        
         <CustomButton text={'Add Instruction'} handleClick={addInstructionLine} className={'block ml-auto'}/>
         
         <CustomButton text={'Save'} handleClick={saveRecipe} className={'block ml-auto'}/>
