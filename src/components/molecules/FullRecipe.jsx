@@ -9,7 +9,7 @@ export default function FullRecipe() {
     const [calories, setCalories] = useState()
 
     useEffect(() => {
-        console.log('Current recipe', fullRecipe)
+        // console.log('Current recipe', fullRecipe)
         fullRecipe?.name && fillRecipeItem()
     }, [fullRecipe])
 

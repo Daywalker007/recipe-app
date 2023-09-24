@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 router.post('/send-recipe', async (req, res) => {
     try {
         const {name, ingredients, instructions, description, owner, categories} = req.body
-        console.log(description)
         const recipeData = {
             name,
             description,
@@ -31,9 +30,15 @@ router.post('/send-recipe', async (req, res) => {
     res.end()
 })
 
-router.get('/get-recipe/:name', async (req, res) => {
+router.get('/get-recipe-name/:name', async (req, res) => {
     const name = req.params.name
     const result = await schemas.Recipes.find({"name":name})
+    res.send({data:result})
+})
+
+router.get('/get-recipe/:id', async (req, res) => {
+    const id = req.params.id
+    const result = await schemas.Recipes.find({"_id":id})
     res.send({data:result})
 })
 
