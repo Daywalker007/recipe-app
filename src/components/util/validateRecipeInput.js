@@ -32,6 +32,8 @@ export default function validateRecipe(recipeInput) {
     
     instructions && instructions.map((el, i) => {
         const errObj = {}
+
+        console.log(`Instruction ${i}`, el)
     
         if(!el.desc)
             errObj.desc = `Please provide a description for step ${i+1}`

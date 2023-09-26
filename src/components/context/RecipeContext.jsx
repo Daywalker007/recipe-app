@@ -22,6 +22,8 @@ export const RecipeContextProvider = ({ children }) => {
     setCurrentDescription('')
     setIngredientLineArr([])
     setInstructionLineArr([])
+
+    console.info('Recipe has been reset')
   }
 
   const value = {
