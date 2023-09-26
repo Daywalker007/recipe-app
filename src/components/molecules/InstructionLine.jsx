@@ -22,3 +22,5 @@ export default function InstructionLine({stepNumber, defaultInfo}) {
     </div>
   )
 }
+
+// TODO: fix carat issue with text area

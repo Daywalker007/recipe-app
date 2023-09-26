@@ -8,7 +8,7 @@ function IngredientLine({lineIndex, defaultInfo}) {
     const {ingredientLineArr, setIngredientLineArr} = useRecipeContext()  
 
     //Local state
-    const [currentRecipeLine, setCurrentRecipeLine] = useState()
+    const [currentRecipeLine, setCurrentRecipeLine] = useState(defaultInfo)
 
     const mesurementOptions = [
         {label: 'Ounce', val:'1'},

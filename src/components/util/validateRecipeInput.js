@@ -15,16 +15,16 @@ export default function validateRecipe(recipeInput) {
     ingredients && ingredients.map((el, index) => {
         const errObj = {}
 
-        console.log('Current ing line: ', el.Count)
+        console.log('Current ingredient: ', el)
     
         if(!el.Count)
-            errObj.Count = 'Please provide a count'
+            errObj.Count = `Please provide a count for ingredient ${index+1}`
 
         if(!el.Measure)
-            errObj.Measure = 'Please provide a measure'
+            errObj.Measure = `Please provide a measure for ingredient ${index+1}`
         
         if(!el.Ingredient)
-            errObj.Ingredient = 'Please provide an ingredient'
+            errObj.Ingredient = `Please provide an ingredient for ingredient ${index+1}`
 
         if(Object.keys(errObj).length !== 0)
             errors.ingredients[index] = errObj
@@ -33,11 +33,11 @@ export default function validateRecipe(recipeInput) {
     instructions && instructions.map((el, i) => {
         const errObj = {}
     
-        if(!el.dsec)
-            errObj.dsec = 'Please provide an instruction description'
+        if(!el.desc)
+            errObj.desc = `Please provide a description for step ${i+1}`
 
         if(Object.keys(errObj).length !== 0)
-            errors.ingredients[i] = errObj
+            errors.instructions[i] = errObj
     })
 
     // Remove array if there are no errors

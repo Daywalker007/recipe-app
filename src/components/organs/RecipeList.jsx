@@ -19,25 +19,26 @@ export default function RecipeList() {
         setInstructionLineArr, 
         currentRecipeName,
         setCurrentRecipeName,
+        resetRecipe,
         setFullRecipe} = useRecipeContext()   
         
     const [existingRecipe, setExistingRecipe] = useState()
     const [errs, setErrs] = useState()
 
     const [queryParams, setQueryParams] = useSearchParams()
-    const [currentParams, setCurrentParams] = useState()
 
     useEffect(() => {
         const searchParams = Object.fromEntries([...queryParams])
-        setCurrentParams(searchParams)
+        console.log('Search params:', searchParams)
+        '_id' in searchParams ? getRecipeByID(searchParams._id) : initRecipe()
 
-        '_id' in searchParams && loadRecipe(searchParams._id)
-
+        return () => resetRecipe()
     },[queryParams])
 
-    const loadRecipe = (id) => {
-        console.log('Loading recipe: ', id)
-        getRecipeByID(id)
+    const initRecipe = () => {
+        // Init one ingredient and one instruction
+        addIngredientLine()
+        addInstructionLine()
     }
 
     const addIngredientLine = () => {
@@ -60,8 +61,6 @@ export default function RecipeList() {
     }
     
     const saveRecipe = () => {
-        // console.log({name:'temp name', ingredientLineArr, instructionLineArr})
-
         const recipeSendItem = {
             name:currentRecipeName, 
             ingredients:ingredientLineArr, 
@@ -73,6 +72,8 @@ export default function RecipeList() {
                 'category'
             ],
         }
+
+        console.log(recipeSendItem)
 
         const errors = validateRecipe(recipeSendItem)
         setErrs(errors)
@@ -97,12 +98,14 @@ export default function RecipeList() {
         const {name, description, ingredients, instructions} = recipe
         const ing = eval(ingredients)
         const inst = eval(instructions)
-        console.log({name, description, ing, inst})
+        // console.log('Recipe pulled from db',{name, description, ing, inst})
+
+        console.log('New ingredients', ing)
 
         setCurrentRecipeName(name)
         setCurrentDescription(description)
-        setIngredientLineArr([...ing])
-        setInstructionLineArr([...inst])
+        setIngredientLineArr(ing)
+        setInstructionLineArr(inst)
     }
 
   return (
