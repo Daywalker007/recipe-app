@@ -18,6 +18,24 @@ export const sendRecipe = (recipe) => {
     });
 }
 
+export const updateRecipe = (id, recipe) => {
+    const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'
+    return fetch(`${uri}/send-recipe/${id}`, { 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: 'POST',
+        body: JSON.stringify(recipe) // body data type must match "Content-Type" header
+    })
+    .then(response => {
+        return response
+    })
+    .catch(error => {
+        console.error('Error from frontend:', error);
+        return 'Issue with server, please try again'
+    });
+} 
+
 // TODO: Eval ingredients and instructions
 export const getRecipeByName = (name) => {
     const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'

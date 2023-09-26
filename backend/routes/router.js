@@ -15,13 +15,39 @@ router.post('/send-recipe', async (req, res) => {
             categories
         }
 
-        const newRecipie = new schemas.Recipes(recipeData)
+        const newRecipe = new schemas.Recipes(recipeData)
 
-        const saveRecipe = await newRecipie.save()
+        const saveRecipe = await newRecipe.save()
 
         if(saveRecipe){
             res.send('Recipe Saved')
         }
+    } catch(err){
+        console.error(err)
+        res.send(err)
+    }
+
+    res.end()
+})
+
+router.post('/send-recipe/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const {name, ingredients, instructions, description, owner, categories} = req.body
+        const recipeData = {
+            name,
+            description,
+            ingredients:JSON.stringify(ingredients),
+            instructions:JSON.stringify(instructions),
+            owner,
+            categories
+        }
+
+        const newRecipe = new schemas.Recipes(recipeData)
+
+        await schemas.Recipes.updateOne({"_id":id}, recipeData)
+        
+        res.send(`Recipe ${name} has been updated`)
     } catch(err){
         console.error(err)
         res.send(err)

@@ -4,7 +4,7 @@ import CustomButton from '../atoms/Button'
 import IngredientLine from '../molecules/IngredientLine'
 import InstructionLine from '../molecules/InstructionLine'
 import FullRecipe from '../molecules/FullRecipe'
-import { sendRecipe, getRecipe, getRecipeByName} from '../util/db-endpoints'
+import { sendRecipe, updateRecipe, getRecipe, getRecipeByName} from '../util/db-endpoints'
 import { InputField, InputTextArea } from '../atoms/Form'
 import validateRecipe from '../util/validateRecipeInput'
 import { useSearchParams } from 'react-router-dom'
@@ -35,8 +35,8 @@ export default function RecipeList() {
         return () => resetRecipe()
     },[queryParams])
 
+    /** Inits one ingredient and one instruction */
     const initRecipe = () => {
-        // Init one ingredient and one instruction
         addIngredientLine()
         addInstructionLine()
     }
@@ -79,6 +79,14 @@ export default function RecipeList() {
         setErrs(errors)
 
         console.log('Errors: ', errors)
+
+        if(Object.keys(errors).length !== 0){
+            alert('Handle the Errors')
+            return
+        }
+
+        if(Object.fromEntries([...queryParams])._id)
+            updateRecipe(Object.fromEntries([...queryParams])._id, recipeSendItem)
 
         // sendRecipe(recipeSendItem)
     }    

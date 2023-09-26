@@ -14,7 +14,7 @@ export function InputTextArea({name, id, onChange, className, err, placeholder =
   return (
     <div className={className}>
         <label htmlFor={name} className='block w-fit'>{name}</label>
-        <div role='textbox' contentEditable='plaintext-only' id={id && id} name={name} aria-multiline={true} aria-placeholder={name ?? placeholder} dangerouslySetInnerHTML={{__html : defaultValue}} className='block resize p-3 rounded w-full shadow text-black h-100 bg-white' onInput={onChange}></div>
+        <div role='textbox' contentEditable='plaintext-only' id={id && id} name={name} aria-multiline={true} aria-placeholder={name ?? placeholder} className='block resize p-3 rounded w-full shadow text-black h-100 bg-white' onInput={onChange}>{defaultValue}</div>
         <label htmlFor={name} className='text-red-500'>{err}</label>
     </div>
   )
