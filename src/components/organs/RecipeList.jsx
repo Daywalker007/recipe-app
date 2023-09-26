@@ -85,10 +85,11 @@ export default function RecipeList() {
             return
         }
 
+        // If there is an id, update on that id. Else, save as new
         if(Object.fromEntries([...queryParams])._id)
             updateRecipe(Object.fromEntries([...queryParams])._id, recipeSendItem)
-
-        // sendRecipe(recipeSendItem)
+        else
+            sendRecipe(recipeSendItem)
     }    
     
     const getRecipeFromDB = async () => {
@@ -132,6 +133,7 @@ export default function RecipeList() {
         {instructionLineArr.map((el, index) =>  <InstructionLine key={index} stepNumber={index} defaultInfo={el} /> )}        
         <CustomButton text={'Add Instruction'} handleClick={addInstructionLine} className={'block ml-auto'}/>
         
+        {/* Save Button */}
         <CustomButton text={'Save'} handleClick={saveRecipe} className={'block ml-auto'}/>
         <CustomButton text={'Get Recipe'} handleClick={getRecipeFromDB} className={'block ml-auto'}/>
 
