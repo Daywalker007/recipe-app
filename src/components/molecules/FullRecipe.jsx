@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRecipeContext } from '../context/RecipeContext'
 import { getRecipe } from '../util/db-endpoints'
+import { mesurementOptions } from './IngredientLine'
+import { useSearchParams } from 'react-router-dom'
 
 export default function FullRecipe() {
     const {fullRecipe, setFullRecipe} = useRecipeContext()
@@ -9,12 +11,14 @@ export default function FullRecipe() {
     const [instructions, setInstructions] = useState()
     const [calories, setCalories] = useState()
 
+    const [queryParams, setQueryParams] = useSearchParams()
+
     useEffect(() => {
-        getRecipeByID('651286f811b81269cbdb0547')
+        const searchParams = Object.fromEntries([...queryParams])
+        '_id' in searchParams && getRecipeByID(searchParams._id)
     }, [])
 
     useEffect(() => {
-        // console.log('Current recipe', fullRecipe)
         fullRecipe?.name && fillRecipeItem()
     }, [fullRecipe])
 
@@ -30,49 +34,78 @@ export default function FullRecipe() {
 
     const fillRecipeItem = () => {            
         {/* List of ingredients */}
-        setIngredients(fullRecipe.ingredients.map((ingLine, i) => renderIngredients(ingLine, i)))
+        setIngredients(renderIngredients(fullRecipe.ingredients))
         
         {/* List of instructions */}
-        setInstructions(fullRecipe.instructions.map((instLine, i) => renderInstructions(instLine, i)))
+        setInstructions(renderInstructions(fullRecipe.instructions))
         
         {/* Calorie Count */}
         setCalories(renderCalories(fullRecipe.ingredients))
     }
 
-    const renderIngredients = (ingLine, idx) => {
+    const renderIngredients = (ingredients) => {
         return (
-            <div className='space-x-5' key={idx}>
-                <span>{ingLine.Count ? ingLine.Count : 'Empty'}</span>
-                <span>{ingLine.Measure ? ingLine.Measure : 'Empty'}</span>
-                <span>{ingLine.Ingredient ? ingLine.Ingredient : 'Empty'}</span>
-                <span>{ingLine.Calories ? ingLine.Calories : 'Empty'}</span>
+            <div className='space-y-3 mb-5'>
+                {ingredients.map((ingLine, idx) => (
+                    <p className='text-black bg-white p-2 rounded-lg' key={idx}>
+                        {ingLine?.Count ?? 'Empty'}
+                        &nbsp;
+                        {mesurementOptions.find(el => el.val === ingLine.Measure).label}
+                        &nbsp;
+                        {ingLine?.Ingredient ?? 'Empty'}
+                        &nbsp;
+                        ({ingLine?.Calories ?? 'Empty'} calories)
+                    </p>
+                ))}
             </div>
         )
     }
     
-    const renderInstructions = (instLine, idx) => {
+    const renderInstructions = (instructions) => {
+        // TODO: handle label click
+        
         return (
-            <div className='space-x-5' key={idx}>
-                <span>{instLine.index !== null ? instLine.index : 'Empty'}</span>
-                <span>{instLine.desc ? instLine.desc : 'Empty'}</span>
+            <div className='text-black space-y-3 mb-5'>
+                {instructions.map((instLine, idx) => (
+                    <div className='relative' key={idx}>
+                        <input type="checkbox" className='absolute peer/check checked:accent-emerald-500/25 z-10 left-3 top-3' name={`step-${idx}`} />
+                        <label htmlFor={`step-${idx}`} className='peer-checked/check:bg-slate-900 p-2 rounded-lg pl-10 bg-white w-full block'>
+                            Step {parseInt(instLine?.index) + 1 ?? 'Empty'}:
+                            &nbsp;
+                            {instLine?.desc ?? 'Empty'}
+                        </label>
+                    </div>
+                ))}
             </div>
         )
     }
 
     const renderCalories = (el) => {
         return (
-            <p>
+            <p className='mb-5'>
                 Calories: {el.some(ing => ing?.Calories) ? el.reduce((sum, curr) => sum+=(parseInt(curr?.Calories)), 0) : 'None'}
             </p>
         )
     }
 
   return (
-    <>
-        <p>{fullRecipe?.description}</p>
-        {ingredients}
-        {instructions}
-        {calories}      
-    </>
+    <div className='w-11/12 mx-auto flex flex-col lg:flex-row gap-10'>
+        <div className='w-3/5 lg:w-fit mx-auto lg:mx-0 flex flex-col justify-center lg:justify-start lg:h-fit relative lg:basis-1/3'>
+            <img src='https://picsum.photos/1140/570' className='block object-fit w-full h-full mx-auto lg:h-fit rounded-lg'/>
+            <p className='bg-white text-black p-5 text-xl text-center absolute bottom-0 w-full rounded-b backdrop-blur-2xl bg-opacity-25'>{fullRecipe?.name}</p>
+        </div>
+
+        <div className='lg:flex-1 bg-slate-600 p-3 rounded-lg'>
+            <p className='text-2xl mb-5'>{fullRecipe?.description}</p>
+
+            {calories}
+
+            <h2 className='text-4xl mb-2'>Ingredients</h2>
+            {ingredients}
+
+            <h2 className='text-4xl mb-2'>Instructions</h2>
+            {instructions}
+        </div>
+    </div>
   )
 }

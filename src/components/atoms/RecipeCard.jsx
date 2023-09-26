@@ -7,7 +7,7 @@ function RecipeCard({recipeName, recipeDesc, img, recipeId}) {
     const handleClick = (e) => {
         e.preventDefault()
 
-        navigate(`/recipe?_id=${recipeId}`)
+        navigate(`/recipe-view?_id=${recipeId}`)
     }
     
     return (
