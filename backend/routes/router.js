@@ -4,31 +4,72 @@ const schemas = require('../models/schemas')
 const mongoose = require('mongoose')
 
 router.post('/send-recipe', async (req, res) => {
-    const {name, ingredientLineArr, instructionLineArr} = req.body
-    // console.log({name, ingredientLineArr, instructionLineArr})
-    // console.log(req.body)
-    const recipeData = {
-        name:name,
-        ingredients:JSON.stringify(ingredientLineArr),
-        instructions:JSON.stringify(instructionLineArr)
-    }
+    try {
+        const {name, ingredients, instructions, description, owner, categories} = req.body
+        const recipeData = {
+            name,
+            description,
+            ingredients:JSON.stringify(ingredients),
+            instructions:JSON.stringify(instructions),
+            owner,
+            categories
+        }
 
-    const newRecipie = new schemas.Recipes(recipeData)
+        const newRecipe = new schemas.Recipes(recipeData)
 
-    const saveRecipe = await newRecipie.save()
+        const saveRecipe = await newRecipe.save()
 
-    if(saveRecipe){
-        res.send('Recipe Saved')
+        if(saveRecipe){
+            res.send('Recipe Saved')
+        }
+    } catch(err){
+        console.error(err)
+        res.send(err)
     }
 
     res.end()
 })
 
-router.get('/get-recipe/:name', async (req, res) => {
+router.post('/send-recipe/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const {name, ingredients, instructions, description, owner, categories} = req.body
+        const recipeData = {
+            name,
+            description,
+            ingredients:JSON.stringify(ingredients),
+            instructions:JSON.stringify(instructions),
+            owner,
+            categories
+        }
+
+        const newRecipe = new schemas.Recipes(recipeData)
+
+        await schemas.Recipes.updateOne({"_id":id}, recipeData)
+        
+        res.send(`Recipe ${name} has been updated`)
+    } catch(err){
+        console.error(err)
+        res.send(err)
+    }
+
+    res.end()
+})
+
+router.get('/get-recipe-name/:name', async (req, res) => {
     const name = req.params.name
-    console.log('Params: ', req.params)
-    console.log('Name: ', name)
     const result = await schemas.Recipes.find({"name":name})
+    res.send({data:result})
+})
+
+router.get('/get-recipe/:id', async (req, res) => {
+    const id = req.params.id
+    const result = await schemas.Recipes.find({"_id":id})
+    res.send({data:result})
+})
+
+router.get('/get-recipes', async (req, res) => {
+    const result = await schemas.Recipes.find()
     res.send({data:result})
 })
 

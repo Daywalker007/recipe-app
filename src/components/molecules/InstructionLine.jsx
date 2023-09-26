@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef } from 'react'
 import { InputTextArea } from '../atoms/Form'
 import { useRecipeContext } from '../context/RecipeContext'
 
-export default function InstructionLine({stepNumber}) {
+export default function InstructionLine({stepNumber, defaultInfo}) {
     const {instructionLineArr, setInstructionLineArr} = useRecipeContext()
-    const [currentInstruction, setCurrentInstruction] = useState({index:stepNumber, desc:''})
+    const thisInput = useRef()
 
     const handleInput = (e) => {
-        const {innerText} = e.target
-        const newObj = {index:stepNumber, desc:innerText}
-        setCurrentInstruction(newObj)
-        
-        let newContextInstructions = [...instructionLineArr]
-        newContextInstructions[stepNumber] = newObj
-        setInstructionLineArr(newContextInstructions)
+      e.preventDefault()
+
+      const {innerText} = e.target
+      const newObj = {index:stepNumber, desc:innerText}
+      
+      let newContextInstructions = [...instructionLineArr]
+      newContextInstructions[stepNumber] = newObj
+      setInstructionLineArr(newContextInstructions)
     }
     
   return (
     <div>
-        <InputTextArea name={`Step ${stepNumber+1}`} onChange={handleInput} className={'h-fit'}/>
+        <InputTextArea ref={thisInput} defaultValue={defaultInfo?.desc} name={`Step ${stepNumber+1}`} onChange={handleInput} className={'h-fit'}/>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import LoginPage from './components/organs/LoginPage'
 import RecipeList from './components/organs/RecipeList'
 import Nav from './components/molecules/Nav'
 import Home from './components/organs/Home'
+import FullRecipe from './components/molecules/FullRecipe'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path='/' element={<LoginPage />} />
           <Route path='/home' element={<Home />} />
           <Route path='/recipe' element={<RecipeList />} />
+          <Route path='/recipe-view' element={<FullRecipe />} />
         </Routes>
       </BrowserRouter>
     </RecipeContextProvider>

@@ -3,12 +3,12 @@ import { InputField, InputTextArea, InputDropdownField } from "../atoms/Form";
 import { useRecipeContext } from "../context/RecipeContext";
 import CustomButton from "../atoms/Button";
 
-function IngredientLine({lineIndex}) {
+function IngredientLine({lineIndex, defaultInfo}) {
     //Context state
     const {ingredientLineArr, setIngredientLineArr} = useRecipeContext()  
 
     //Local state
-    const [currentRecipeLine, setCurrentRecipeLine] = useState()
+    const [currentRecipeLine, setCurrentRecipeLine] = useState(defaultInfo)
 
     const mesurementOptions = [
         {label: 'Ounce', val:'1'},
@@ -38,10 +38,10 @@ function IngredientLine({lineIndex}) {
 
   return (
     <div className="border border-gray-700 p-10 flex gap-3">
-        <InputField className={'basis-1/3'} name={'Count'} onChange={updateRecipe} type="number" />
-        <InputDropdownField className={'basis-1/10'} name={'Measure'} onChange={updateRecipe}  options={mesurementOptions}/>
-        <InputField className={'basis-1/3'} name={'Ingredient'} onChange={updateRecipe} />
-        <InputField className={'basis-1/10'} name={'Calories'} onChange={updateRecipe} type="number" defaultValue='0' />
+        <InputField defaultValue={defaultInfo?.Count} className={'basis-1/3'} name={'Count'} onChange={updateRecipe} type="number" />
+        <InputDropdownField defaultValue={defaultInfo?.Measure} className={'basis-1/10'} name={'Measure'} onChange={updateRecipe}  options={mesurementOptions}/>
+        <InputField defaultValue={defaultInfo?.Ingredient} className={'basis-1/3'} name={'Ingredient'} onChange={updateRecipe} />
+        <InputField defaultValue={defaultInfo?.Calories ?? 0} className={'basis-1/10'} name={'Calories'} onChange={updateRecipe} type="number" />
         {/* <CustomButton text={'Delete'} handleClick={deleteIngredientLine} /> */}
     </div>
   );
