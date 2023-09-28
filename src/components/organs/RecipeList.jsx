@@ -20,7 +20,8 @@ export default function RecipeList() {
         currentRecipeName,
         setCurrentRecipeName,
         resetRecipe,
-        setFullRecipe} = useRecipeContext()   
+        setFullRecipe,
+        user} = useRecipeContext()   
         
     const [existingRecipe, setExistingRecipe] = useState()
     const [errs, setErrs] = useState()
@@ -66,7 +67,7 @@ export default function RecipeList() {
             ingredients:ingredientLineArr, 
             instructions:instructionLineArr,
             description:currentDescription,
-            owner:'Reggie',
+            owner:user._id, //MongoDB id of user, so that we can find their username later
             categories:[
                 'sample',
                 'category'
@@ -136,9 +137,6 @@ export default function RecipeList() {
         {/* Save Button */}
         <CustomButton text={'Save'} handleClick={saveRecipe} className={'block ml-auto'}/>
         <CustomButton text={'Get Recipe'} handleClick={getRecipeFromDB} className={'block ml-auto'}/>
-
-        {/* Read only */}
-        <FullRecipe />
     </div>
   )
 }

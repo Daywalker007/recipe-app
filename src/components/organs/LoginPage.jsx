@@ -1,9 +1,42 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomButton from '../atoms/Button'
-import { Link } from 'react-router-dom'
 import { InputField } from '../atoms/Form'
+import { getUser } from '../util/user-endpoints'
+import { useNavigate } from 'react-router-dom'
+import { useRecipeContext } from '../context/RecipeContext'
 
 export default function LoginPage() {
+    const navigate = useNavigate()
+    const {setUser} = useRecipeContext()
+
+    useEffect(() => {
+        setUser(null)
+    }, [])
+
+    const googleAuth = async () => {
+        let timer = null
+        const childWindow = window.open(
+            `${import.meta.env.VITE_API_URL}/auth/google/callback/`,
+            '_blank',
+            'width=500,height=600'
+        )
+
+        if(childWindow){
+            timer = setInterval(async () => {
+                if(childWindow.closed){
+                    console.info('User is authenticated')
+                    const authUser = await getUser()
+                    // Remove interval to avoid memory issues
+                    if(authUser && timer){
+                        clearInterval(timer)
+                        setUser(authUser)
+                        navigate('/home')
+                    }
+                }
+            }, 500);
+        }
+    }
+
   return (
     <div className='body-height flex justify-center items-center'>
         <section className='bg-white text-black p-10 rounded-xl shadow-md w-full'>
@@ -15,9 +48,7 @@ export default function LoginPage() {
                 <InputField name={'Password'} id={'login-pass'} onChange={() => {}} type='password' />
 
                 <div className='flex justify-center gap-5'>
-                    <Link to={'/recipe'} className='block w-2/5'>
-                        <CustomButton text={'Login'} handleClick={() => {}} className={'w-full'}/>
-                    </Link>
+                    <CustomButton text={'Login with Google'} handleClick={googleAuth} className={'w-full'}/>
                     <CustomButton text={'Create'} handleClick={() => {}} className={'w-2/5'} />
                 </div>
             </form>

@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import RecipeListView from '../molecules/RecipeListView'
 import CustomButton from '../atoms/Button'
 import { useNavigate } from 'react-router-dom'
 import 'boxicons'
+import { useRecipeContext } from '../context/RecipeContext'
 
 function Home() {
     const navigate = useNavigate()
+    const {user} = useRecipeContext()
+
+    useEffect(() => {
+        console.log('User in home file:', user)
+    }, [])
     
     const handleNewRecipe = (e) => {
         e.preventDefault()

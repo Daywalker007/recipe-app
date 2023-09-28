@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const recipeSchema = new Schema({
     name:{type:String},
+    recipeImg:{String},
     ingredients:{type:String},
     instructions:{type:String},
     description:{type:String},
@@ -12,8 +13,8 @@ const recipeSchema = new Schema({
 })
 
 const userSchema = new Schema({
-    name:{type:String},
-    email:{type:String},
+    userName:{type:String},
+    googleId:{type:String},
     entryDate: {type:Date, default:Date.now}
 })
 

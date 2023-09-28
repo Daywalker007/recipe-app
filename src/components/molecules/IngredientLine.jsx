@@ -3,19 +3,19 @@ import { InputField, InputTextArea, InputDropdownField } from "../atoms/Form";
 import { useRecipeContext } from "../context/RecipeContext";
 import CustomButton from "../atoms/Button";
 
+export const mesurementOptions = [
+    {label: 'Ounce', val:'1'},
+    {label: 'Tablespoon', val:'2'},
+    {label: 'Teaspoon', val:'3'},
+    {label: 'Gram', val:'4'},
+]
+
 function IngredientLine({lineIndex, defaultInfo}) {
     //Context state
     const {ingredientLineArr, setIngredientLineArr} = useRecipeContext()  
 
     //Local state
     const [currentRecipeLine, setCurrentRecipeLine] = useState(defaultInfo)
-
-    const mesurementOptions = [
-        {label: 'Ounce', val:'1'},
-        {label: 'Tablespoon', val:'2'},
-        {label: 'Teaspoon', val:'3'},
-        {label: 'Gram', val:'4'},
-    ]
 
     const updateRecipe = (e) => {
         //Set value on local ingredient line
