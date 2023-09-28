@@ -15,6 +15,7 @@ export const RecipeContextProvider = ({ children }) => {
   const [currentDescription, setCurrentDescription] = useState('')
   const [currentRecipeName, setCurrentRecipeName] = useState('')
   const [fullRecipe, setFullRecipe] = useState()
+  const [user, setUser] = useState(null)
 
   const resetRecipe = () => {
     // Make sure that all fields are blank
@@ -37,7 +38,9 @@ export const RecipeContextProvider = ({ children }) => {
     setCurrentRecipeName,
     fullRecipe,
     setFullRecipe,
-    resetRecipe
+    resetRecipe,
+    user,
+    setUser
   }
 
   return (

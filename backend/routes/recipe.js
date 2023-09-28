@@ -64,6 +64,8 @@ router.get('/get-recipe-name/:name', async (req, res) => {
 
 router.get('/get-recipe/:id', async (req, res) => {
     const id = req.params.id
+    const user = req.user
+    console.log('Current user: ', user)
     const result = await schemas.Recipes.find({"_id":id})
     res.send({data:result})
 })

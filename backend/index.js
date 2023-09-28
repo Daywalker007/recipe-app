@@ -1,17 +1,35 @@
 const express = require('express')
 const cors = require('cors')
-const router = require('./routes/router')
+const router = require('./routes/recipe')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const passport = require('passport')
+const cookieSession = require('cookie-session')
+const passportSetup = require('./passport')
+const authRoutes = require('./routes/auth')
 require('dotenv').config()
 
 const app = express()
-
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials:true
+}))
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use('/', router)
+
+app.use(
+    cookieSession({
+        name:'session',
+        keys:[process.env.SESSION_KEY],
+        maxAge:24*60*60*100 // 24 hours
+    })
+)
+app.use(passport.initialize())
+app.use(passport.session())
+app.use('/auth', authRoutes)
 
 const dbOptions = {
     useNewUrlParser:true,

@@ -1,7 +1,5 @@
-import { data } from "autoprefixer";
-
 export const sendRecipe = (recipe) => {
-    const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'
+    const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/send-recipe`, { 
         headers: {
             "Content-Type": "application/json",
@@ -19,7 +17,7 @@ export const sendRecipe = (recipe) => {
 }
 
 export const updateRecipe = (id, recipe) => {
-    const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'
+    const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/send-recipe/${id}`, { 
         headers: {
             "Content-Type": "application/json",
@@ -38,7 +36,7 @@ export const updateRecipe = (id, recipe) => {
 
 // TODO: Eval ingredients and instructions
 export const getRecipeByName = (name) => {
-    const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'
+    const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe-name/${name}`, { 
         headers: {
             "Content-Type": "application/json",
@@ -57,7 +55,7 @@ export const getRecipeByName = (name) => {
 
 // TODO: Eval ingredients and instructions
 export const getRecipe = (id) => {
-    const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'
+    const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe/${id}`, { 
         headers: {
             "Content-Type": "application/json",
@@ -75,7 +73,7 @@ export const getRecipe = (id) => {
 }
 
 export const getAllRecipes = () => {
-    const uri = import.meta.env.VITE_BASE_URI || 'http://localhost:5000'
+    const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipes`, { 
         headers: {
             "Content-Type": "application/json",
