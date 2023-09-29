@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import RecipeCard from '../atoms/RecipeCard'
-import { getAllRecipes } from '../util/db-endpoints'
+import { getAllRecipes, getRecipeByUser,  } from '../util/db-endpoints'
+import { useRecipeContext } from '../context/RecipeContext'
+import { getUser } from '../util/user-endpoints'
 
 
 function RecipeListView() {
-
+    const {user, setUser} = useRecipeContext()
     const [recipeList, setRecipeList] = useState([])
 
-    const getRecipies = async () => {
-        const recipeArr = await getAllRecipes()
+    const getRecipes = async () => {
+        console.log('Current user:', user)
+        const recipeArr = await getRecipeByUser()
+        // const recipeArr = await getAllRecipes()
         setRecipeList(recipeArr)
     }
     
-    useEffect(() => {        
-        getRecipies()
+    useEffect(() => {
+        getRecipes()
     }, [])
 
     return (

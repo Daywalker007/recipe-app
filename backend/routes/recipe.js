@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const schemas = require('../models/schemas')
 const mongoose = require('mongoose')
+const { isAuthenticated } = require('../middleware/isAuthenticated')
 
 router.post('/send-recipe', async (req, res) => {
     try {
@@ -62,15 +63,22 @@ router.get('/get-recipe-name/:name', async (req, res) => {
     res.send({data:result})
 })
 
+router.get('/get-recipe-owner/', isAuthenticated, async (req, res) => {
+    const userID = req.session.user._id
+    console.log('User ID',userID)
+    const result = await schemas.Recipes.find({owner:userID})
+    console.log('Sending following recipes:', result)
+    res.send({data:result})
+})
+
 router.get('/get-recipe/:id', async (req, res) => {
     const id = req.params.id
-    const user = req.user
-    console.log('Current user: ', user)
     const result = await schemas.Recipes.find({"_id":id})
     res.send({data:result})
 })
 
-router.get('/get-recipes', async (req, res) => {
+router.get('/get-recipes', isAuthenticated, async (req, res) => {
+    console.log('User session from get all recipes:', {id:req.session.id, session:req.session})
     const result = await schemas.Recipes.find()
     res.send({data:result})
 })

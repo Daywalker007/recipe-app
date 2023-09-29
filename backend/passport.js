@@ -17,14 +17,9 @@ passport.use(
             schemas.Users.findOne({"googleId":profile.id})
             .then(currentUser => {
                 if(currentUser){
-                    // User exists already
-                    console.log('Current User is:', currentUser)
-
                     // Serialize user
                     done(null,currentUser)
                 } else {
-                    // Create new user
-
                     // Data to fill out User nodel
                     const userData = {
                         userName: profile.displayName,
@@ -32,8 +27,6 @@ passport.use(
                     }
             
                     new schemas.Users(userData).save().then((newUser) => {
-                        console.log('New user created:', newUser)
-
                         // Serialize user
                         done(null,currentUser)
                     })
@@ -46,6 +39,7 @@ passport.use(
 passport.serializeUser((user,done) => {
     // Pass info from user into cookie in browser
     console.log('Serializing user')
+
     // Pass MongoDB id into cookie
     done(null, user.id)
 })

@@ -1,5 +1,6 @@
 const authCheck = (req, res, next) => {
-    if(!req.user){
+    console.log('User session from isAuthenticated:', req.session.id)
+    if(!req.session.user){
         // User not logged in
         console.log('User NOT logged in')
         res.send({error:'Error: Faild auth check'})

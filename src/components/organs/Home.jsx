@@ -8,10 +8,6 @@ import { useRecipeContext } from '../context/RecipeContext'
 function Home() {
     const navigate = useNavigate()
     const {user} = useRecipeContext()
-
-    useEffect(() => {
-        console.log('User in home file:', user)
-    }, [])
     
     const handleNewRecipe = (e) => {
         e.preventDefault()
