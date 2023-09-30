@@ -67,7 +67,6 @@ router.get('/get-recipe-owner/', isAuthenticated, async (req, res) => {
     const userID = req.session.user._id
     console.log('User ID',userID)
     const result = await schemas.Recipes.find({owner:userID})
-    console.log('Sending following recipes:', result)
     res.send({data:result})
 })
 

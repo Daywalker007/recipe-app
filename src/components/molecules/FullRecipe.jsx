@@ -50,7 +50,7 @@ export default function FullRecipe() {
                     <p className='text-black bg-white p-2 rounded-lg' key={idx}>
                         {ingLine?.Count ?? 'Empty'}
                         &nbsp;
-                        {mesurementOptions.find(el => el.val === ingLine.Measure).label}
+                        {mesurementOptions.find(el => el.val === ingLine.Measure)?.label ?? 'Empty'}
                         &nbsp;
                         {ingLine?.Ingredient ?? 'Empty'}
                         &nbsp;
@@ -89,10 +89,10 @@ export default function FullRecipe() {
     }
 
   return (
-    <div className='w-11/12 mx-auto flex flex-col lg:flex-row gap-10'>
-        <div className='w-3/5 lg:w-fit mx-auto lg:mx-0 flex flex-col justify-center lg:justify-start lg:h-fit relative lg:basis-1/3'>
+    <div className='body-height flex flex-col lg:flex-row gap-10'>
+        <div className='mx-auto lg:mx-0 flex flex-col justify-center lg:justify-start lg:h-fit relative lg:basis-1/3'>
             <img src='https://picsum.photos/1140/570' className='block object-fit w-full h-full mx-auto lg:h-fit rounded-lg'/>
-            <p className='bg-white text-black p-5 text-xl text-center absolute bottom-0 w-full rounded-b backdrop-blur-2xl bg-opacity-25'>{fullRecipe?.name}</p>
+            <p className='bg-white text-black p-[2%] text-xl text-center absolute bottom-0 w-full rounded-b backdrop-blur-2xl bg-opacity-25'>{fullRecipe?.name}</p>
         </div>
 
         <div className='lg:flex-1 bg-slate-600 p-3 rounded-lg'>

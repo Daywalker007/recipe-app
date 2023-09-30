@@ -5,7 +5,7 @@ const { isAuthenticated } = require('../middleware/isAuthenticated')
 require('dotenv').config()
 
 router.get('/', isAuthenticated, (req,res) => {
-    console.log('Login success: ', req.session.id)
+    console.log('Login success: ', req.session)
     res.json(req.session.user)
 })
 
