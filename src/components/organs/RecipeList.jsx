@@ -20,8 +20,7 @@ export default function RecipeList() {
         currentRecipeName,
         setCurrentRecipeName,
         resetRecipe,
-        setFullRecipe,
-        user} = useRecipeContext()   
+        setFullRecipe} = useRecipeContext()   
         
     const [existingRecipe, setExistingRecipe] = useState()
     const [errs, setErrs] = useState()

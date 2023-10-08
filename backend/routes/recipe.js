@@ -24,7 +24,7 @@ router.post('/send-recipe', async (req, res) => {
             res.send('Recipe Saved')
         }
     } catch(err){
-        console.error(err)
+        // console.error(err)
         res.send(err)
     }
 
@@ -50,7 +50,7 @@ router.post('/send-recipe/:id', async (req, res) => {
         
         res.send(`Recipe ${name} has been updated`)
     } catch(err){
-        console.error(err)
+        // console.error(err)
         res.send(err)
     }
 
@@ -65,19 +65,21 @@ router.get('/get-recipe-name/:name', async (req, res) => {
 
 router.get('/get-recipe-owner/', isAuthenticated, async (req, res) => {
     const userID = req.session.user._id
-    console.log('User ID',userID)
-    const result = await schemas.Recipes.find({owner:userID})
+    const result = await schemas.Recipes.find({owner:userID})    
     res.send({data:result})
 })
 
 router.get('/get-recipe/:id', async (req, res) => {
     const id = req.params.id
-    const result = await schemas.Recipes.find({"_id":id})
+    const result = await schemas.Recipes.findOne({"_id":id})
+    const ownerData = await schemas.Users.findOne({'_id':result.owner})
+    result.owner = ownerData.userName
+    
     res.send({data:result})
 })
 
-router.get('/get-recipes', isAuthenticated, async (req, res) => {
-    console.log('User session from get all recipes:', {id:req.session.id, session:req.session})
+router.get('/get-recipes', async (req, res) => {
+    // console.log('User session from get all recipes:', {id:req.session.id, session:req.session})
     const result = await schemas.Recipes.find()
     res.send({data:result})
 })

@@ -1,9 +1,11 @@
+require('dotenv').config()
+
 const authCheck = (req, res, next) => {
     console.log('User session from isAuthenticated:', req.session.id)
-    if(!req.session.user){
+    if(!req.session.authorized){
         // User not logged in
         console.log('User NOT logged in')
-        res.send({error:'Error: Faild auth check'})
+        res.redirect(`${process.env.CLIENT_URL}/`)
     } else {
         // Go to the next piece of middleware
         console.log('User IS logged in')

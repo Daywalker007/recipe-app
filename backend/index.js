@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
-// const cookieSession = require('cookie-session')
 const passportSetup = require('./passport')
 const authRoutes = require('./routes/auth')
 const isAuthenticated = require('./middleware/isAuthenticated')
@@ -28,13 +27,6 @@ app.use(session({
         secure:false
     }
 }))
-// app.use(
-//     cookieSession({
-//         name:'session',
-//         keys:[process.env.SESSION_KEY],
-//         maxAge:24*60*60*100 // 24 hours
-//     })
-// )
 
 app.use(passport.initialize())
 app.use(passport.session())

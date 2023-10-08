@@ -38,7 +38,6 @@ export const updateRecipe = (id, recipe) => {
     });
 } 
 
-// TODO: Eval ingredients and instructions
 export const getRecipeByName = (name) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe-name/${name}`, { 
@@ -59,7 +58,6 @@ export const getRecipeByName = (name) => {
     });
 }
 
-// TODO: Eval ingredients and instructions
 export const getRecipe = (id) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe/${id}`, { 
@@ -72,7 +70,7 @@ export const getRecipe = (id) => {
     })
     .then(response => response.json())
     .then(response => {
-        return response.data[0]
+        return response.data
     })
     .catch(error => {
         console.error('Error from frontend:', error);
