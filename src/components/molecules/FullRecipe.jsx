@@ -81,10 +81,18 @@ export default function FullRecipe() {
     }
 
     const renderCalories = (el) => {
+        const calorieCount = el.some(ing => ing?.Calories) ? el.reduce((sum, curr) => sum+=(parseInt(curr?.Calories)), 0) : '100'
+
+        if(!calorieCount)
+            return
+
         return (
-            <p className='mb-5'>
-                Calories: {el.some(ing => ing?.Calories) ? el.reduce((sum, curr) => sum+=(parseInt(curr?.Calories)), 0) : 'None'}
-            </p>
+            <>
+                <p className='text-3xl'>
+                    {calorieCount}
+                    <span className='text-sm'>cals</span>
+                </p>
+            </>
         )
     }
 
@@ -93,16 +101,18 @@ export default function FullRecipe() {
         <div className='mx-auto lg:mx-0 flex flex-col justify-center lg:justify-start lg:h-fit relative lg:basis-1/3'>
             <img src='https://picsum.photos/1140/570' className='block object-fit w-full h-full mx-auto lg:h-fit rounded-lg'/>
             
-            <div className='bg-white text-black p-[2%] absolute bottom-0 w-full rounded-b-lg backdrop-blur-2xl bg-opacity-25'>
-                <p className='text-xl'>{fullRecipe?.name}</p>
-                <p className='text-sm'>{fullRecipe?.owner}</p>
+            <div className='flex justify-between bg-white text-black p-[2%] absolute bottom-0 w-full rounded-b-lg backdrop-blur-2xl bg-opacity-25'>
+                <div>
+                    <p className='text-xl'>{fullRecipe?.name}</p>
+                    <p className='text-sm'>{fullRecipe?.owner}</p>
+                </div>
+
+                {calories}
             </div>
         </div>
 
         <div className='lg:flex-1 bg-slate-600 p-3 rounded-lg'>
-            <p className='text-2xl mb-5'>{fullRecipe?.description}</p>
-
-            {calories}
+            <p className='text-2xl mb-5'>{fullRecipe?.description}</p>            
 
             <h2 className='text-4xl mb-2'>Ingredients</h2>
             {ingredients}
