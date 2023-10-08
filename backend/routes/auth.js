@@ -5,16 +5,15 @@ const { isAuthenticated } = require('../middleware/isAuthenticated')
 require('dotenv').config()
 
 router.get('/', isAuthenticated, (req,res) => {
-    console.log('Request from user:', req.user)
-    res.json(req.user)
+    res.json(req.session.user)
 })
 
 router.get('/login/success', (req, res) => {
-    if(req.user){
+    if(req.session.user){
         res.send({
             error:false,
             message:'Successfully Logged In',
-            user:req.user,
+            user:req.session.user,
         })
     } else {
         res.status(403).json({error:true, message:'Not Authorized'})
@@ -37,7 +36,11 @@ router.get(
         // Calls callback function in passport.js file first before running this
 
         // User is successfully logged in
-        console.log('You reached the callback URI with user:', req.user)
+
+        // Attach user object to session var
+        req.session.user = req.user
+        req.session.authorized = true
+
         res.redirect(`${process.env.CLIENT_URL}/login/success/`)
     }
 )

@@ -3,14 +3,18 @@ import CustomButton from '../atoms/Button'
 import { InputField } from '../atoms/Form'
 import { getUser } from '../util/user-endpoints'
 import { useNavigate } from 'react-router-dom'
-import { useRecipeContext } from '../context/RecipeContext'
 
 export default function LoginPage() {
     const navigate = useNavigate()
-    const {setUser} = useRecipeContext()
 
     useEffect(() => {
-        setUser(null)
+        // Call an inmmediately called function that gets the user data        
+        (async () => {
+            const authUser = await getUser()
+
+            if(authUser._id)
+                navigate('/home')
+        })()
     }, [])
 
     const googleAuth = async () => {
@@ -29,7 +33,6 @@ export default function LoginPage() {
                     // Remove interval to avoid memory issues
                     if(authUser && timer){
                         clearInterval(timer)
-                        setUser(authUser)
                         navigate('/home')
                     }
                 }

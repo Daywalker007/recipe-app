@@ -3,6 +3,7 @@ export const getUser = () => {
     return fetch(url, {
         headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": window.location.href
         },
         credentials:"include",
         method:"GET",
@@ -11,7 +12,7 @@ export const getUser = () => {
     .then((response) => {
         return response.json()
     }).catch(error => {
-        console.error('Error from getUser:', error);
+        console.warn('Unable to get user data from server:', error);
         return error
     });
 }

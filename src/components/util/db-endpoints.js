@@ -5,6 +5,8 @@ export const sendRecipe = (recipe) => {
             "Content-Type": "application/json",
         },
         method: 'POST',
+        // DONT FOGET THIS GOD FORSAKEN LINE
+        credentials: 'include',
         body: JSON.stringify(recipe) // body data type must match "Content-Type" header
     })
     .then(response => {
@@ -23,6 +25,8 @@ export const updateRecipe = (id, recipe) => {
             "Content-Type": "application/json",
         },
         method: 'POST',
+        // DONT FOGET THIS GOD FORSAKEN LINE
+        credentials: 'include',
         body: JSON.stringify(recipe) // body data type must match "Content-Type" header
     })
     .then(response => {
@@ -34,7 +38,6 @@ export const updateRecipe = (id, recipe) => {
     });
 } 
 
-// TODO: Eval ingredients and instructions
 export const getRecipeByName = (name) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe-name/${name}`, { 
@@ -42,6 +45,8 @@ export const getRecipeByName = (name) => {
             "Content-Type": "application/json",
         },
         method: 'GET',
+        // DONT FOGET THIS GOD FORSAKEN LINE
+        credentials: 'include',
     })
     .then(response => response.json())
     .then(response => {
@@ -53,7 +58,6 @@ export const getRecipeByName = (name) => {
     });
 }
 
-// TODO: Eval ingredients and instructions
 export const getRecipe = (id) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe/${id}`, { 
@@ -61,10 +65,32 @@ export const getRecipe = (id) => {
             "Content-Type": "application/json",
         },
         method: 'GET',
+        // DONT FOGET THIS GOD FORSAKEN LINE
+        credentials: 'include',
     })
     .then(response => response.json())
     .then(response => {
-        return response.data[0]
+        return response.data
+    })
+    .catch(error => {
+        console.error('Error from frontend:', error);
+        return 'Issue with server, please try again'
+    });
+}
+
+export const getRecipeByUser = () => {
+    // const uri = import.meta.env.VITE_API_URL
+    return fetch(`${import.meta.env.VITE_API_URL}/get-recipe-owner`, { 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: 'GET',
+        // DONT FOGET THIS GOD FORSAKEN LINE
+        credentials: 'include',
+    })
+    .then(response => response.json())
+    .then(response => {
+        return response.data
     })
     .catch(error => {
         console.error('Error from frontend:', error);
@@ -79,6 +105,8 @@ export const getAllRecipes = () => {
             "Content-Type": "application/json",
         },
         method: 'GET',
+        // DONT FOGET THIS GOD FORSAKEN LINE
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(({data}) => {
