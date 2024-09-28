@@ -1,12 +1,17 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { InputTextArea } from '../atoms/Form'
 import { useRecipeContext } from '../context/RecipeContext'
+import { RecipeInstructionLine } from '../types/recipe-types'
 
-export default function InstructionLine({stepNumber, defaultInfo}) {
+interface IInstructionLineProps {
+  stepNumber: number,
+  defaultInfo: RecipeInstructionLine,
+}
+export default function InstructionLine({stepNumber, defaultInfo}:IInstructionLineProps) {
     const {instructionLineArr, setInstructionLineArr} = useRecipeContext()
     const thisInput = useRef()
 
-    const handleInput = (e) => {
+    const handleInput = (e:any) => {
       e.preventDefault()
 
       const {innerText} = e.target

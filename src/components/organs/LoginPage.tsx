@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import CustomButton from '../atoms/Button'
 import { InputField } from '../atoms/Form'
 import { getUser } from '../util/user-endpoints'
@@ -18,7 +18,7 @@ export default function LoginPage() {
     }, [])
 
     const googleAuth = async () => {
-        let timer = null
+        let timer: any
         const childWindow = window.open(
             `${import.meta.env.VITE_API_URL}/auth/google/callback/`,
             '_blank',

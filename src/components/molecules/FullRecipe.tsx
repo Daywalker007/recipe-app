@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import { useRecipeContext } from '../context/RecipeContext'
 import { getRecipe } from '../util/db-endpoints'
 import { mesurementOptions } from './IngredientLine'
@@ -7,9 +7,9 @@ import { useSearchParams } from 'react-router-dom'
 export default function FullRecipe() {
     const {fullRecipe, setFullRecipe} = useRecipeContext()
 
-    const [ingredients, setIngredients] = useState()
-    const [instructions, setInstructions] = useState()
-    const [calories, setCalories] = useState()
+    const [ingredients, setIngredients] = useState<ReactElement>(<></>)
+    const [instructions, setInstructions] = useState<ReactElement>(<></>)
+    const [calories, setCalories] = useState<ReactElement>()
 
     const [queryParams, setQueryParams] = useSearchParams()
 
@@ -43,7 +43,7 @@ export default function FullRecipe() {
         setCalories(renderCalories(fullRecipe.ingredients))
     }
 
-    const renderIngredients = (ingredients) => {
+    const renderIngredients = (ingredients) : ReactElement => {
         return (
             <div className='space-y-3 mb-5'>
                 {ingredients.map((ingLine, idx) => (

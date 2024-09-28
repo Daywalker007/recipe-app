@@ -1,10 +1,15 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function RecipeCard({recipeName, recipeDesc, img, recipeId}) {
+interface IRecipeCardProps {
+    recipeName: string,
+    recipeDesc: string,
+    img: string,
+    recipeId: string
+}
+function RecipeCard({recipeName, recipeDesc, img, recipeId}:IRecipeCardProps) {
     const navigate = useNavigate()
 
-    const handleClick = (e) => {
+    const handleClick = (e:any) => {
         e.preventDefault()
 
         navigate(`/recipe-view?_id=${recipeId}`)

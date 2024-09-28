@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Nav() {
   return (
     <nav className='h-[5dvh] flex justify-center items-center'>
