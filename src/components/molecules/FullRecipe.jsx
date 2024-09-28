@@ -111,7 +111,7 @@ export default function FullRecipe() {
             </div>
         </div>
 
-        <div className='lg:flex-1 bg-slate-600 p-3 rounded-lg'>
+        <div className='lg:flex-1 bg-theme-100 p-3 rounded-lg'>
             <p className='text-2xl mb-5'>{fullRecipe?.description}</p>            
 
             <h2 className='text-4xl mb-2'>Ingredients</h2>
