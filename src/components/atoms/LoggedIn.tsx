@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 export default function LoggedIn() {
 
     useEffect(() => {
       // Hide navbar
-      const navBar = document.querySelector('nav').style.display = 'none'
+      const navBar = document.querySelector('nav')!
+      navBar.style.display = 'none'
 
         setTimeout(() => {
             window.close()

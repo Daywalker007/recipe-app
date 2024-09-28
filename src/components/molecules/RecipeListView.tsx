@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react'
 import RecipeCard from '../atoms/RecipeCard'
+import { RecipeResponse } from '../types/recipe-types'
 
-function RecipeListView({title, recipeList}) {
+interface IRecipeListViewProps {
+    title: string,
+    recipeList: RecipeResponse[]
+}
+function RecipeListView({title, recipeList}:IRecipeListViewProps) {
 
     return (
         <>
@@ -13,7 +17,7 @@ function RecipeListView({title, recipeList}) {
                         recipeList?.map(el => {
                             return <RecipeCard 
                                 key={el._id} 
-                                recipeId={el._id} 
+                                recipeId={el._id!} 
                                 recipeName={el.name} 
                                 recipeDesc={el.description} 
                                 img={'https://picsum.photos/160'} 
