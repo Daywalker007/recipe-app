@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react'
 import RecipeCard from '../atoms/RecipeCard'
+import { RecipeResponse } from '../types/recipe-types'
 
-function RecipeListView({title, recipeList}) {
+interface IRecipeListViewProps {
+    title: string,
+    recipeList: RecipeResponse[]
+}
+function RecipeListView({title, recipeList}:IRecipeListViewProps) {
 
     return (
         <>
             <h2 className='text-3xl'>{title}</h2>
             <div className='no-scrollbar w-full overflow-x-scroll'>
-                <div className='flex md:flex-wrap gap-3 md:gap-6 py-2 w-max md:w-auto'>
+                {/* NOTE: Changing to grid for now. Thinking about having a toggle for classes for both grid and flex-scroll */}
+                <div className='grid grid-rows-1 max-md:grid-flow-col md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 py-2 w-max md:w-auto'>
                     {
                         recipeList?.map(el => {
                             return <RecipeCard 
                                 key={el._id} 
-                                recipeId={el._id} 
+                                recipeId={el._id!} 
                                 recipeName={el.name} 
                                 recipeDesc={el.description} 
                                 img={'https://picsum.photos/160'} 

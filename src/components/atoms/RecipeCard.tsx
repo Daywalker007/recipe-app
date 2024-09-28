@@ -1,17 +1,22 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function RecipeCard({recipeName, recipeDesc, img, recipeId}) {
+interface IRecipeCardProps {
+    recipeName: string,
+    recipeDesc: string,
+    img: string,
+    recipeId: string
+}
+function RecipeCard({recipeName, recipeDesc, img, recipeId}:IRecipeCardProps) {
     const navigate = useNavigate()
 
-    const handleClick = (e) => {
+    const handleClick = (e:any) => {
         e.preventDefault()
 
         navigate(`/recipe-view?_id=${recipeId}`)
     }
     
     return (
-        <div className='w-max md:w-1/5 h-48 shadow-md rounded-lg bg-slate-400 relative' onClick={handleClick}>
+        <div className='shadow-md rounded-lg bg-slate-400 relative' onClick={handleClick}>
             <img src={img} className='block object-fill rounded-lg h-full w-full'/>
             
             <div className='absolute bottom-0 bg-white w-full text-black bg-opacity-50 backdrop-blur-sm p-2 rounded-b-lg'>

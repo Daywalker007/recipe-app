@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        sans: ['K2D', 'sans-serif']
+      },
       colors:{
         theme:{
           100:'#7c7287',
