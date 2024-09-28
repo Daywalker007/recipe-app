@@ -21,17 +21,15 @@ export type CreateRecipeRequest = {
 }
 
 export type RecipeResponse = {
-  _id: {
-    $oid: string
-  },
+  _id?: string,
   name: string,
   ingredients: string,
   instructions: string,
   description: string,
   owner: string,
-  categories: string[]
-  entryDate: {
+  categories?: string[]
+  entryDate?: {
     $date: string
   },
-  __v: number
+  __v?: number
 };

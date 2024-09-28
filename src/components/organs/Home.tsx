@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import RecipeListView from '../molecules/RecipeListView'
-import CustomButton from '../atoms/Button'
+import CustomButton from '../atoms/Button.tsx'
 import { useNavigate } from 'react-router-dom'
 import 'boxicons'
-import { useRecipeContext } from '../context/RecipeContext'
-import { getAllRecipes, getRecipeByUser } from '../util/db-endpoints'
+import { getAllRecipes, getRecipeByUser } from '../util/db-endpoints.ts'
 import { RecipeResponse } from '../types/recipe-types'
 
 function Home() {
     const navigate = useNavigate()
-    const {user} = useRecipeContext()
 
     const [usersRecipes, setUsersRecipes] = useState<RecipeResponse[]>([])
     const [allRecipes, setAllRecipes] = useState<RecipeResponse[]>([])
@@ -19,6 +17,8 @@ function Home() {
         (async () => {
             const users = await getRecipeByUser()
             const all = await getAllRecipes()
+
+            console.log('Recipes: ', {users, all})
 
             setUsersRecipes(users)
             setAllRecipes(all)
@@ -41,7 +41,7 @@ function Home() {
                 </div>
                 <CustomButton 
                     onClick={handleNewRecipe}
-                    text={<box-icon name='plus' style={{ fill: 'white' }} />}
+                    text={'+'}
                     className={'fixed bottom-0 right-4 rounded-full !p-1'}
                 />
             </div>

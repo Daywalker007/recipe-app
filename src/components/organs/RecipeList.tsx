@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useRecipeContext } from '../context/RecipeContext'
 import CustomButton from '../atoms/Button'
 import IngredientLine from '../molecules/IngredientLine'
 import InstructionLine from '../molecules/InstructionLine'
@@ -7,25 +6,26 @@ import { sendRecipe, updateRecipe, getRecipe, getRecipeByName} from '../util/db-
 import { InputField, InputTextArea } from '../atoms/Form'
 import validateRecipe, { IRecipeError } from '../util/validateRecipeInput'
 import { useSearchParams } from 'react-router-dom'
-import { CreateRecipeRequest, RecipeResponse } from '../types/recipe-types'
+import { CreateRecipeRequest, IngredientLine as IngLine, RecipeResponse } from '../types/recipe-types'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { fullRecipeState, ingredientListState, instructionListState } from '../../recoil-state/recipeState'
+import useResetRecipe from '../../hooks/useResetRecipe'
+import { userState } from '../../recoil-state/userState'
 
-export default function RecipeList() {
-    const {
-        ingredientLineArr, 
-        setIngredientLineArr, 
-        instructionLineArr, 
-        currentDescription,
-        setCurrentDescription,
-        setInstructionLineArr, 
-        currentRecipeName,
-        setCurrentRecipeName,
-        resetRecipe,
-        setFullRecipe} = useRecipeContext()   
+export default function RecipeList() { 
+    
+    const [ingredientLineArr, setIngredientLineArr] = useRecoilState(ingredientListState)
+    const [instructionLineArr, setInstructionLineArr] = useRecoilState(instructionListState)
+    const setFullRecipe = useSetRecoilState(fullRecipeState)
+    const resetRecipe = useResetRecipe()
         
     const [existingRecipe, setExistingRecipe] = useState<RecipeResponse>()
-    const [errs, setErrs] = useState<IRecipeError>({errorMessage:[]})
+    const [, setErrs] = useState<IRecipeError>({errorMessage:[]})
+    const [description, setDescription] = useState<string>('')
+    const [recipeName, setRecipeName] = useState<string>('')
+    const [queryParams] = useSearchParams()
 
-    const [queryParams, setQueryParams] = useSearchParams()
+    const user = useRecoilValue(userState)
 
     useEffect(() => {
         const searchParams = Object.fromEntries([...queryParams])
@@ -42,7 +42,13 @@ export default function RecipeList() {
     }
 
     const addIngredientLine = () => {
-        setIngredientLineArr(prevArr => [...prevArr, {Calories:'0'}])
+        const emptyIngredientLine : IngLine = {
+            count: 0,
+            measure: '',
+            ingredient: '',
+            calories: 0
+        }
+        setIngredientLineArr(prevArr => [...prevArr, emptyIngredientLine])
     }
     
     const addInstructionLine = () => {
@@ -50,22 +56,22 @@ export default function RecipeList() {
         setInstructionLineArr(prevArr => [...prevArr, {index: currentIndex, desc:''}])
     }
 
-    const handleDescription = (e) => {
+    const handleDescription = (e:any) => {
         const {innerText} = e.target
-        setCurrentDescription(innerText)
+        setDescription(innerText)
     }
     
-    const handleRecipeName = (e) => {
+    const handleRecipeName = (e:any) => {
         const {value} = e.target
-        setCurrentRecipeName(value)
+        setRecipeName(value)
     }
     
     const saveRecipe = () => {
         const recipeSendItem : CreateRecipeRequest = {
-            name:currentRecipeName, 
+            name:recipeName, 
             ingredients:ingredientLineArr, 
             instructions:instructionLineArr,
-            description:currentDescription,
+            description:description,
             owner:user._id, //MongoDB id of user, so that we can find their username later
             categories:[
                 'sample',
@@ -97,10 +103,10 @@ export default function RecipeList() {
         // console.log(await getRecipe('temp name'))
         const ing = eval(ingredients)
         const inst = eval(instructions)
-        setFullRecipe({name, description, ingredients:ing, instructions:inst })
+        setFullRecipe({name, description, ingredients:ing, instructions:inst } as RecipeResponse)
     } 
     
-    const getRecipeByID = async (id) => {
+    const getRecipeByID = async (id:string) => {
         const recipe = await getRecipe(id)
         setExistingRecipe(recipe)
 
@@ -111,8 +117,8 @@ export default function RecipeList() {
 
         console.log('New ingredients', ing)
 
-        setCurrentRecipeName(name)
-        setCurrentDescription(description)
+        setRecipeName(name)
+        setDescription(description)
         setIngredientLineArr(ing)
         setInstructionLineArr(inst)
     }

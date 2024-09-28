@@ -1,4 +1,6 @@
-export const sendRecipe = (recipe) => {
+import { CreateRecipeRequest } from "../types/recipe-types";
+
+export const sendRecipe = (recipe:CreateRecipeRequest) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/send-recipe`, { 
         headers: {
@@ -18,7 +20,7 @@ export const sendRecipe = (recipe) => {
     });
 }
 
-export const updateRecipe = (id, recipe) => {
+export const updateRecipe = (id:string, recipe:CreateRecipeRequest) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/send-recipe/${id}`, { 
         headers: {
@@ -38,7 +40,7 @@ export const updateRecipe = (id, recipe) => {
     });
 } 
 
-export const getRecipeByName = (name) => {
+export const getRecipeByName = (name:string) => {
     const uri = import.meta.env.VITE_API_URL
     return fetch(`${uri}/get-recipe-name/${name}`, { 
         headers: {
@@ -58,8 +60,12 @@ export const getRecipeByName = (name) => {
     });
 }
 
-export const getRecipe = (id) => {
+export const getRecipe = (id:string) => {
     const uri = import.meta.env.VITE_API_URL
+    if(!id){
+        alert('Bad recipe id')
+        return
+    }
     return fetch(`${uri}/get-recipe/${id}`, { 
         headers: {
             "Content-Type": "application/json",

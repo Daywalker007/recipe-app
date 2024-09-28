@@ -1,7 +1,5 @@
 export interface IUser {
-  _id: {
-    $oid: string
-  },
+  _id: string,
   userName: string,
   googleId: string,
   entryDate: {

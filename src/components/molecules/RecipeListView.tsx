@@ -16,8 +16,8 @@ function RecipeListView({title, recipeList}:IRecipeListViewProps) {
                     {
                         recipeList?.map(el => {
                             return <RecipeCard 
-                                key={el._id.$oid} 
-                                recipeId={el._id.$oid} 
+                                key={el._id} 
+                                recipeId={el._id!} 
                                 recipeName={el.name} 
                                 recipeDesc={el.description} 
                                 img={'https://picsum.photos/160'} 

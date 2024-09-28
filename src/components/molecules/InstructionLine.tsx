@@ -1,14 +1,15 @@
 import { useRef } from 'react'
 import { InputTextArea } from '../atoms/Form'
-import { useRecipeContext } from '../context/RecipeContext'
 import { RecipeInstructionLine } from '../types/recipe-types'
+import { useRecoilState } from 'recoil'
+import { instructionListState } from '../../recoil-state/recipeState'
 
 interface IInstructionLineProps {
   stepNumber: number,
   defaultInfo: RecipeInstructionLine,
 }
 export default function InstructionLine({stepNumber, defaultInfo}:IInstructionLineProps) {
-    const {instructionLineArr, setInstructionLineArr} = useRecipeContext()
+    const [instructionLineArr, setInstructionLineArr] = useRecoilState(instructionListState)
     const thisInput = useRef()
 
     const handleInput = (e:any) => {

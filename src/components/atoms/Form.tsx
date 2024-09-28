@@ -1,4 +1,3 @@
-import React, { forwardRef } from 'react'
 
 export function InputField({...props}) {
   return (
@@ -45,7 +44,7 @@ export function InputDropdownField({...props}) {
           <label htmlFor={props.name} className='block w-fit'>{props.name}</label>
           <select {...props} id={props.id && props.id} name={props.name} className='px-5 rounded w-full shadow text-black' onChange={props.onChange} defaultValue={-1} >
             <option value={-1} disabled hidden>Select</option>
-            {props.options?.map((el, idx) => {
+            {props.options?.map((el:any) => {
                 return (<option value={el.val} key={`${el.label}${el.val}`}>{el.label}</option>)
             })}
           </select>

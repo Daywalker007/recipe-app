@@ -6,7 +6,7 @@
       "module": "ESNext",
       "skipLibCheck": true,
       "types": ["vite/client"],
-      "noImplicitAny": false,
+      // "noImplicitAny": false,
   
       /* Bundler mode */
       "moduleResolution": "bundler",
@@ -23,7 +23,7 @@
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "eventBus.ts"],
+    "include": ["src", ".src/**/*"],
     "references": [{ "path": "./tsconfig.node.json" }]
   }
   

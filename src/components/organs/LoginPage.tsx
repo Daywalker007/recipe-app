@@ -3,17 +3,23 @@ import CustomButton from '../atoms/Button'
 import { InputField } from '../atoms/Form'
 import { getUser } from '../util/user-endpoints'
 import { useNavigate } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { userState } from '../../recoil-state/userState'
+import { IUser } from '../types/general-types'
 
 export default function LoginPage() {
     const navigate = useNavigate()
+    const setUser = useSetRecoilState(userState)
 
     useEffect(() => {
         // Call an inmmediately called function that gets the user data        
         (async () => {
-            const authUser = await getUser()
+            const authUser : IUser = await getUser()
 
-            if(authUser._id)
+            if(authUser._id){
+                setUser(authUser)
                 navigate('/home')
+            }
         })()
     }, [])
 

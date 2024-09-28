@@ -1,9 +1,27 @@
 import {atom} from 'recoil'
-import { RecipeResponse } from '../components/types/recipe-types'
+import { IngredientLine, RecipeInstructionLine, RecipeResponse } from '../components/types/recipe-types'
 
-const defaultRecipeList : RecipeResponse[] = []
+const defaultRecipe : RecipeResponse = {
+    name: '',
+    ingredients: '',
+    instructions: '',
+    description: '',
+    owner: ''
+}
+const defaultIngredientList : IngredientLine[] = []
+const defaultInstructionList : RecipeInstructionLine[] = []
 
-export const ingredientListState = atom<RecipeResponse[]>({
+export const ingredientListState = atom<IngredientLine[]>({
     key: 'ingredientListState',
-    default: defaultRecipeList
+    default: defaultIngredientList
+})
+
+export const instructionListState = atom<RecipeInstructionLine[]>({
+    key: 'instructionListState',
+    default: defaultInstructionList
+})
+
+export const fullRecipeState = atom<RecipeResponse>({
+    key: 'fullRecipeState',
+    default: defaultRecipe
 })
